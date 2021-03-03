@@ -8,8 +8,8 @@
 
 - [x] Don't copy pesky system files like `.DS_Store` (done by only symlinking
   non dotted files)
-- [ ] Copy folders/files recursively
-  - [ ] Don't make a symlink for the file, instead make the directories and only
+- [x] Copy folders/files recursively
+  - [x] Don't make a symlink for the file, instead make the directories and only
     symlink the file.
 
 

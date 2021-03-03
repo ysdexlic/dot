@@ -1,3 +1,0 @@
-excludes = ['README.*\.md', 'LICENSE']
-
-dotfile_dirs = ['$HOME/dev/dot/example_in']

@@ -1,1 +1,0 @@
-/Users/davidthompson/dev/dot/example_in/vimrc

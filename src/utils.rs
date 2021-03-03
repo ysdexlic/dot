@@ -1,7 +1,8 @@
+use glob::glob;
 use regex::Regex;
 use serde_derive::Deserialize;
 use std::env;
-use std::fs::{read_dir, File};
+use std::fs::{metadata, File};
 use std::io::prelude::*;
 use std::path::{Path, PathBuf};
 
@@ -55,13 +56,21 @@ pub fn get_links() -> Vec<(String, String)> {
     for mut dir_str in config.dotfile_dirs {
         dir_str = dir_str.replace("$HOME", dirs::home_dir().unwrap().to_str().unwrap());
         dir_str = dir_str.replace("~", dirs::home_dir().unwrap().to_str().unwrap());
-        let paths = read_dir(dir_str).unwrap();
 
-        for path in paths {
-            let path_str = path.unwrap().path().display().to_string();
-            let filename = Path::new(&path_str).file_name().unwrap().to_str().unwrap();
+        let globstr = format!("{}/**/*", &dir_str);
 
-            if filename.chars().nth(0).unwrap() == '.' {
+        for path in glob(&globstr).expect("something went wrong globbing") {
+            let path = path.unwrap();
+            let path_str = path.display().to_string();
+
+            let path_names: Vec<&str> = path_str.split(&format!("{}/", &dir_str)).collect();
+            let path_name = path_names[1];
+
+            if metadata(&path_str).unwrap().is_dir() {
+                continue;
+            }
+
+            if path_name.chars().nth(0).unwrap() == '.' {
                 continue;
             }
 
@@ -78,7 +87,7 @@ pub fn get_links() -> Vec<(String, String)> {
                 continue;
             }
 
-            let out_path = &format!("{}/.{}", get_output_dir(), filename);
+            let out_path = &format!("{}/.{}", get_output_dir(), path_name);
             links.push((path_str, out_path.to_string()));
         }
     }

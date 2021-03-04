@@ -5,7 +5,11 @@ use std::path::Path;
 
 use crate::utils;
 
-pub fn link_dotfiles() -> std::io::Result<()> {
+pub fn link_dotfiles(should_bootstrap: bool) -> std::io::Result<()> {
+    if should_bootstrap {
+        utils::bootstrap()?;
+    }
+
     let links = utils::get_links();
 
     if links.is_err() {

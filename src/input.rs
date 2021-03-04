@@ -4,8 +4,6 @@ use structopt::StructOpt;
 pub enum Command {
     #[structopt(about = "Lists symlinks created by dot")]
     List,
-    #[structopt(about = "Clones dotfile repo and bootstraps it")]
-    Clone,
     #[structopt(about = "Initialises a repo as a dot repo")]
     Initialize,
     #[structopt(about = "Removes all symlinks")]
@@ -20,4 +18,7 @@ pub enum Command {
 pub struct Cli {
     #[structopt(subcommand)]
     pub cmd: Option<Command>,
+
+    #[structopt(short, long)]
+    pub bootstrap: bool,
 }

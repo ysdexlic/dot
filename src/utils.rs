@@ -1,10 +1,11 @@
+use colour::e_red_ln;
 use glob::glob;
 use regex::Regex;
 use serde_derive::Deserialize;
-use std::env;
-use std::fs::{metadata, File};
+use std::fs::{metadata, read_dir, File};
 use std::io::prelude::*;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
+use std::{env, process::Command};
 
 pub fn get_output_dir() -> String {
     let out_dir = format!(
@@ -101,4 +102,39 @@ pub fn get_links() -> std::io::Result<Vec<(String, String)>> {
         }
     }
     Ok(links)
+}
+
+pub fn bootstrap() -> std::io::Result<()> {
+    println!("bootstrapping...");
+    let config = get_config()?;
+
+    for mut in_dir in config.dotfile_dirs {
+        in_dir = in_dir.replace("$HOME", dirs::home_dir().unwrap().to_str().unwrap());
+        in_dir = in_dir.replace("~", dirs::home_dir().unwrap().to_str().unwrap());
+
+        let bootstrap_path = format!("{}/{}", &in_dir, "config/dot/bootstrap");
+        let bootstrap_path = Path::new(&bootstrap_path);
+        if !bootstrap_path.exists() {
+            e_red_ln!("No bootstrap directory found");
+            println!(
+                "If you want to run bootstrap executables please put them in config/dot/bootstrap/"
+            );
+            continue;
+        }
+        if metadata(&bootstrap_path).unwrap().is_dir() {
+            let dir = read_dir(&bootstrap_path).unwrap();
+            for file in dir {
+                execute_file(&file.unwrap().path());
+            }
+        }
+    }
+
+    Ok(())
+}
+
+fn execute_file(path: &Path) {
+    let output = Command::new(path).output().expect("couldn't execute file");
+
+    std::io::stdout().write_all(&output.stdout).unwrap();
+    std::io::stderr().write_all(&output.stderr).unwrap();
 }

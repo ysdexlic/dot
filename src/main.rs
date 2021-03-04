@@ -12,10 +12,9 @@ fn main() -> std::io::Result<()> {
 
     let res = match args.cmd {
         Some(input::Command::List) => cmd::list::list_dotfiles(),
-        Some(input::Command::Clone) => cmd::clone::clone_dotfiles(),
         Some(input::Command::Initialize) => cmd::init::init_dotfiles(),
         Some(input::Command::Down { dot_directory }) => cmd::down::down_dotfiles(dot_directory),
-        None => cmd::up::link_dotfiles(),
+        None => cmd::up::link_dotfiles(args.bootstrap),
     };
 
     state::clean()?;

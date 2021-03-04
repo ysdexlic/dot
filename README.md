@@ -16,14 +16,16 @@
     symlink the file
 
 
-- [ ] Add bootstrapping feature (run bootstrap executables)
+- [x] Add bootstrapping feature (run bootstrap executables)
 - [ ] Add ability to have pre/post hooks
 - [ ] Add ability to have host or tag specific files
+- [ ] Add proper support for multiple dotfile dirs
 
 
 - [x] Add regex file exclusions
 
 - [x] Add down command to remove symlinks created by dot
+  - [ ] Down command should remove empty folders created by dot
 - [x] Add list command to list symlinks created by dot
 
 

@@ -1,4 +1,3 @@
-pub mod clone;
 pub mod down;
 pub mod init;
 pub mod list;

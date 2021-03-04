@@ -21,7 +21,7 @@ pub struct Config {
     dotfile_dirs: Vec<String>,
 }
 
-pub fn get_config() -> Config {
+pub fn get_config() -> std::io::Result<Config> {
     let out_dir = get_output_dir();
 
     let dotrc_env_var = env::var("DOTRC");
@@ -37,19 +37,27 @@ pub fn get_config() -> Config {
         dotrc_path.push(dotrc_env_var.unwrap());
     }
 
-    let mut file = File::open(dotrc_path).expect("Unable to open file");
+    let mut file = File::open(dotrc_path)?;
     let mut contents = String::new();
 
     file.read_to_string(&mut contents)
         .expect("Unable to read file");
 
     let config: Config = toml::from_str(&contents).unwrap();
-    config
+    Ok(config)
 }
 
 // Returns array of (to, from) strings to link
 pub fn get_links() -> Vec<(String, String)> {
     let config = get_config();
+
+    if config.is_err() {
+        // config file doesn't exist
+        let veccy: Vec<(String, String)> = vec![];
+        return veccy;
+    }
+
+    let config = config.unwrap();
 
     let mut links: Vec<(String, String)> = vec![];
 

@@ -1,4 +1,4 @@
-use std::fs::{create_dir, write, File};
+use std::fs::{create_dir, read_link, remove_file, symlink_metadata, write, File};
 use std::io::{prelude::*, BufReader};
 use std::path::{Path, PathBuf};
 
@@ -16,19 +16,27 @@ pub fn set_state() -> std::io::Result<()> {
     let config_dir = get_config_dir();
     let state_file_path = format!("{}/{}", config_dir.to_str().unwrap(), ".state");
 
-    if !Path::new(&config_dir).exists() {
-        create_dir(config_dir)?;
-    }
-    if !Path::new(&state_file_path).exists() {
-        File::create(&state_file_path)?;
-    }
-
     let mut filestr = String::new();
     for link in links {
         let link_str = format!("{} {}\n", link.0, link.1);
         filestr.push_str(&link_str);
     }
     write(&state_file_path, filestr)?;
+
+    Ok(())
+}
+
+pub fn setup() -> std::io::Result<()> {
+    let config_dir = get_config_dir();
+    let state_file_path = format!("{}/{}", config_dir.to_str().unwrap(), ".state");
+
+    if !Path::new(&config_dir).exists() {
+        create_dir(config_dir)?;
+    }
+
+    if !Path::new(&state_file_path).exists() {
+        File::create(&state_file_path)?;
+    }
 
     Ok(())
 }
@@ -50,4 +58,22 @@ pub fn get_state() -> Vec<(String, String)> {
     }
 
     output
+}
+
+pub fn clean() -> std::io::Result<()> {
+    let state = get_state();
+
+    for links in state {
+        let path_in = Path::new(&links.0);
+        let path_out = Path::new(&links.1);
+        let slink = read_link(&path_out);
+        if !path_in.exists() && slink.is_ok() {
+            // remove old symlink
+            remove_file(path_out)?;
+            // TODO
+            // remove unused directories?
+        }
+    }
+
+    Ok(())
 }

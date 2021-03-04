@@ -20,9 +20,9 @@
 
 - [x] Add regex file exclusions
 
-- [ ] Add down command to remove symlinks created by dot
+- [x] Add down command to remove symlinks created by dot
 - [x] Add list command to list symlinks created by dot
 
 
 - [x] Save last state after upping
-- [ ] Consolidate with previous state to clean when upping
+- [x] Consolidate with previous state to clean when upping

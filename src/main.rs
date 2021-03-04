@@ -6,6 +6,8 @@ mod state;
 mod utils;
 
 fn main() -> std::io::Result<()> {
+    state::setup()?;
+
     let args = input::Cli::from_args();
 
     let res = match args.cmd {
@@ -16,6 +18,7 @@ fn main() -> std::io::Result<()> {
         None => cmd::up::link_dotfiles(),
     };
 
+    state::clean()?;
     state::set_state()?;
 
     res.expect("something went wrong");

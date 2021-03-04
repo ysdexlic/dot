@@ -3,6 +3,7 @@
 ### TODO
 
 - [ ] Learn Rust
+- [ ] Write tests
 - [ ] Error handling
   - [x] Add error when config file isn't set
   - [ ] Fix repeated use of printing the "No .dotrc found" error

@@ -4,7 +4,7 @@ use serde_derive::Deserialize;
 use std::env;
 use std::fs::{metadata, File};
 use std::io::prelude::*;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 pub fn get_output_dir() -> String {
     let out_dir = format!(
@@ -48,16 +48,8 @@ pub fn get_config() -> std::io::Result<Config> {
 }
 
 // Returns array of (to, from) strings to link
-pub fn get_links() -> Vec<(String, String)> {
-    let config = get_config();
-
-    if config.is_err() {
-        // config file doesn't exist
-        let veccy: Vec<(String, String)> = vec![];
-        return veccy;
-    }
-
-    let config = config.unwrap();
+pub fn get_links() -> std::io::Result<Vec<(String, String)>> {
+    let config = get_config()?;
 
     let mut links: Vec<(String, String)> = vec![];
 
@@ -78,7 +70,16 @@ pub fn get_links() -> Vec<(String, String)> {
                 continue;
             }
 
-            if path_name.chars().nth(0).unwrap() == '.' {
+            let sub_dirs: &[&str] = &path_name.split("/").collect::<Vec<&str>>();
+            let mut has_dot = false;
+            for i in 0..sub_dirs.len() {
+                let p = format!("{}", sub_dirs[i]);
+                if p.chars().nth(0).unwrap() == '.' {
+                    has_dot = true;
+                }
+            }
+
+            if has_dot {
                 continue;
             }
 
@@ -99,5 +100,5 @@ pub fn get_links() -> Vec<(String, String)> {
             links.push((path_str, out_path.to_string()));
         }
     }
-    links
+    Ok(links)
 }

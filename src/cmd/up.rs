@@ -1,3 +1,4 @@
+use colour::e_red_ln;
 use std::fs::{create_dir, read_link, remove_file, rename, symlink_metadata};
 use std::os::unix::fs::symlink;
 use std::path::Path;
@@ -6,6 +7,16 @@ use crate::utils;
 
 pub fn link_dotfiles() -> std::io::Result<()> {
     let links = utils::get_links();
+
+    if links.is_err() {
+        // config file can't be found
+        e_red_ln!("No .dotrc found in home directory, for initail call use the DOTRC env variable");
+        println!("Example:");
+        println!("DOTRC=$HOME/path/to/.dotrc dot");
+        return Ok(());
+    }
+
+    let links = links.unwrap();
 
     for link in links {
         let (link_in, link_out) = link;

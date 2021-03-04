@@ -1,4 +1,4 @@
-use std::fs::{create_dir, read_link, remove_file, symlink_metadata, write, File};
+use std::fs::{create_dir, read_link, remove_file, write, File};
 use std::io::{prelude::*, BufReader};
 use std::path::{Path, PathBuf};
 
@@ -12,7 +12,12 @@ pub fn get_config_dir() -> PathBuf {
 }
 
 pub fn set_state() -> std::io::Result<()> {
-    let links = utils::get_links();
+    let mut links = utils::get_links();
+    if links.is_err() {
+        links = Ok(vec![]);
+    }
+    let links = links.unwrap();
+
     let config_dir = get_config_dir();
     let state_file_path = format!("{}/{}", config_dir.to_str().unwrap(), ".state");
 
@@ -67,8 +72,8 @@ pub fn clean() -> std::io::Result<()> {
         let path_in = Path::new(&links.0);
         let path_out = Path::new(&links.1);
         let slink = read_link(&path_out);
-        if !path_in.exists() && slink.is_ok() {
-            // remove old symlink
+        if !path_in.exists() && slink.is_ok() && !slink.unwrap().exists() {
+            // if original path doesn't exist but symlink still exists (and is broken), remove it
             remove_file(path_out)?;
             // TODO
             // remove unused directories?

@@ -3,8 +3,8 @@ use std::path::Path;
 
 use crate::utils;
 
-pub fn down_dotfiles(dot_dir: Option<String>) -> std::io::Result<()> {
-    let links = utils::get_links();
+pub fn down_dotfiles(_dot_dir: Option<String>) -> std::io::Result<()> {
+    let links = utils::get_links()?;
 
     for link in links {
         let (_, link_out) = link;

@@ -4,12 +4,12 @@
 
 - [ ] Learn Rust
 - [ ] Error handling
-  - [ ] Add error when config file isn't set
+  - [x] Add error when config file isn't set
 
 
 - [x] Don't copy pesky system files like `.DS_Store` (done by only symlinking
   non dotted files)
-  - [ ] Seems to still be happening for nested dotfiles - i.e.
+  - [x] Seems to still be happening for nested dotfiles - i.e.
         `something/something/.DS_Store`
 - [x] Copy folders/files recursively
   - [x] Don't make a symlink for the file, instead make the directories and only

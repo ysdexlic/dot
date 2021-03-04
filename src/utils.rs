@@ -66,6 +66,7 @@ pub fn get_links() -> std::io::Result<Vec<(String, String)>> {
 
             let path_names: Vec<&str> = path_str.split(&format!("{}/", &dir_str)).collect();
             let path_name = path_names[1];
+            // let path_name = path_str.replace(&format!("{}/", &dir_str), "");
 
             if metadata(&path_str).unwrap().is_dir() {
                 continue;
@@ -105,7 +106,6 @@ pub fn get_links() -> std::io::Result<Vec<(String, String)>> {
 }
 
 pub fn bootstrap() -> std::io::Result<()> {
-    println!("bootstrapping...");
     let config = get_config()?;
 
     for mut in_dir in config.dotfile_dirs {
@@ -133,8 +133,8 @@ pub fn bootstrap() -> std::io::Result<()> {
 }
 
 fn execute_file(path: &Path) {
-    let output = Command::new(path).output().expect("couldn't execute file");
+    let mut child = Command::new(path).spawn().expect("couldn't execute file");
+    let ecode = child.wait().expect("failed to wait on child");
 
-    std::io::stdout().write_all(&output.stdout).unwrap();
-    std::io::stderr().write_all(&output.stderr).unwrap();
+    assert!(ecode.success());
 }

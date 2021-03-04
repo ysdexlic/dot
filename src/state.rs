@@ -1,4 +1,4 @@
-use std::fs::{create_dir, read_link, remove_file, write, File};
+use std::fs::{create_dir, read_link, remove_dir, remove_file, write, File};
 use std::io::{prelude::*, BufReader};
 use std::path::{Path, PathBuf};
 
@@ -66,6 +66,7 @@ pub fn get_state() -> Vec<(String, String)> {
 }
 
 pub fn clean() -> std::io::Result<()> {
+    let output_dir = utils::get_output_dir();
     let state = get_state();
 
     for links in state {
@@ -75,8 +76,25 @@ pub fn clean() -> std::io::Result<()> {
         if !path_in.exists() && slink.is_ok() && !slink.unwrap().exists() {
             // if original path doesn't exist but symlink still exists (and is broken), remove it
             remove_file(path_out)?;
-            // TODO
-            // remove unused directories?
+
+            // remove unused directories
+            let out_str = path_out.to_str().unwrap();
+            let path = out_str.replace(&format!("{}/", &output_dir), "");
+            let sub_dirs: &[&str] = &path.split("/").collect::<Vec<&str>>();
+            let sub_dirs = &sub_dirs[..sub_dirs.len() - 1];
+
+            for i in 0..sub_dirs.len() {
+                let index = sub_dirs.len() - i;
+                let path = &sub_dirs[..index].join("/");
+                let path = format!("{}/{}", &output_dir, path);
+                let path = Path::new(&path);
+                if path.exists() {
+                    let is_empty = path.read_dir()?.next().is_none();
+                    if is_empty {
+                        remove_dir(path)?;
+                    }
+                }
+            }
         }
     }
 

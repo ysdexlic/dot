@@ -9,6 +9,10 @@
   - [ ] Fix repeated use of printing the "No .dotrc found" error
   - [ ] Find out best error handling practices
   - [ ] Return pretty errors
+- [ ] Add github actions to build binary
+  - [ ] Add binary to releases
+- [ ] Release on homebrew
+  - [ ] Automate homebrew update PRs
 
 
 - [x] Don't copy pesky system files like `.DS_Store` (done by only symlinking
@@ -28,6 +32,8 @@
 
 - [x] Add regex file exclusions
 
+- [ ] Add init command to create a new dotfile repo
+- [ ] Add clone command to wrap git, pull and bootstrap?
 - [x] Add down command to remove symlinks created by dot
   - [x] Down command should remove empty folders created by dot
 - [x] Add list command to list symlinks created by dot

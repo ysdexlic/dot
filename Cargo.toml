@@ -1,5 +1,5 @@
 [package]
-name = "dot"
+name = "dotm"
 version = "0.1.0"
 edition = "2018"
 description = "Dotfile Manager"
@@ -9,6 +9,10 @@ readme = "README.md"
 authors = ["David Thompson <david.arthur.thompson@gmail.com>"]
 categories = ["command-line-utilities"]
 keywords = ["dotfile", "manager", "dot"]
+
+[[bin]]
+name = "dot"
+path = "src/main.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

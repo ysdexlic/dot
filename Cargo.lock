@@ -178,7 +178,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "dot"
+name = "dotm"
 version = "0.1.0"
 dependencies = [
  "colour",

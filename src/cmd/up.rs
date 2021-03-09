@@ -14,7 +14,7 @@ pub fn link_dotfiles(should_bootstrap: bool) -> std::io::Result<()> {
 
     if links.is_err() {
         // config file can't be found
-        e_red_ln!("No .dotrc found in home directory, for initail call use the DOTRC env variable");
+        e_red_ln!("No .dotrc found in home directory, for initial call use the DOTRC env variable");
         print!("Example: ");
         println!("DOTRC=$HOME/path/to/.dotrc dot");
         return Ok(());

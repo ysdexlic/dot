@@ -3,7 +3,7 @@
 ### TODO
 
 - [ ] Learn Rust
-- [ ] Write tests
+- [ ] **Write tests**
 - [ ] Error handling
   - [x] Add error when config file isn't set
   - [ ] Fix repeated use of printing the "No .dotrc found" error
@@ -12,7 +12,7 @@
 - [ ] Add github actions to build binary
   - [ ] Add binary to releases
 - [ ] Release on homebrew
-  - [ ] Automate homebrew update PRs
+  - [ ] Automate homebrew update PRs (`mislav/bump-homebrew-formula-action`)
 
 
 - [x] Don't copy pesky system files like `.DS_Store` (done by only symlinking
@@ -27,13 +27,15 @@
 - [x] Add bootstrapping feature (run bootstrap executables)
 - [ ] Add ability to have pre/post hooks
 - [ ] Add ability to have host or tag specific files
-- [ ] Add proper support for multiple dotfile dirs
 
 
 - [x] Add regex file exclusions
 
 - [ ] Add init command to create a new dotfile repo
-- [ ] Add clone command to wrap git, pull and bootstrap?
+- [ ] Add clone command to wrap git & pull
+  - [ ] When cloning, prompt to bootstrap
+  - [ ] When cloning, prompt to add any tags
+    - [ ] Go through all files and prompt to install any tags that are present
 - [x] Add down command to remove symlinks created by dot
   - [x] Down command should remove empty folders created by dot
 - [x] Add list command to list symlinks created by dot

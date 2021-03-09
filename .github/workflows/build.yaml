@@ -52,7 +52,7 @@ jobs:
         run: |
           cd target/release
           strip dot
-          tar czvf ../../../dot dot
+          tar czvf ../../dot dot
           cd -
 
       - name: Post Build | Upload artifacts

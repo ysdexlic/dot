@@ -8,11 +8,7 @@ use std::path::{Path, PathBuf};
 use std::{env, process::Command};
 
 pub fn get_output_dir() -> String {
-    let out_dir = format!(
-        "{}/dev/dot/example_out",
-        dirs::home_dir().unwrap().to_str().unwrap()
-    );
-    // let out_dir = format!("{}", dirs::home_dir().unwrap().to_str().unwrap());
+    let out_dir = format!("{}", dirs::home_dir().unwrap().to_str().unwrap());
     out_dir
 }
 

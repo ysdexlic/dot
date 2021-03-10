@@ -1,0 +1,97 @@
+name: Release
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup | Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup | Cache Cargo
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Setup | Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+          profile: minimal
+
+      - name: Build | Build
+        run: cargo build --release
+
+      - name: Post Setup | Prepare artifacts
+        run: |
+          cd target/release
+          strip dot
+          tar czvf ../../dot.tar.gz dot
+          cd -
+
+      - name: Post Setup | Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dot.tar.gz
+          path: dot.tar.gz
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup | Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup | Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+          override: true
+
+      - name: Build | Publish
+        run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
+
+  release:
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup | Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup | Artifacts
+        uses: actions/download-artifact@v2
+
+      - name: Setup | Create Release Log
+        run: cat CHANGELOG.md | tail -n +7 | head -n 25 > RELEASE_LOG.md
+
+      - name: Build | Publish Pre-Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dot.tar.gz
+          body_path: RELEASE_LOG.md
+          draft: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # brew:
+  #   needs: release
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: mislav/bump-homebrew-formula-action@v1.6
+  #       with:
+  #         formula-name: dot
+  #         homebrew-tap: ysdexlic/homebrew-formulae
+  #       env:
+  #         COMMITTER_TOKEN: ${{ secrets.GITHUB_TOKEN }}

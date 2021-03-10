@@ -44,19 +44,3 @@ jobs:
       # Run the CLI to ensure we don't have any subtle runtime issues.
       - name: Build | Run
         run: cargo run -- -h
-
-      - name: Build | Build
-        run: cargo build --release
-
-      - name: Post Build | Prepare artifacts
-        run: |
-          cd target/release
-          strip dot
-          tar czvf ../../dot dot
-          cd -
-
-      - name: Post Build | Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: dot
-          path: dot

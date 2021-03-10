@@ -1,5 +1,9 @@
 # Dot
 
+[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/ysdexlic/dot/build/master)](https://github.com/ysdexlic/dot/actions)
+[![crate](https://img.shields.io/crates/v/dotm.svg?color=brightgreen)](https://crates.io/crates/dotm)
+![license](https://img.shields.io/crates/l/dotm)
+
 ### TODO
 
 - [ ] Learn Rust

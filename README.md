@@ -4,19 +4,31 @@
 [![crate](https://img.shields.io/crates/v/dotm.svg?color=brightgreen)](https://crates.io/crates/dotm)
 ![license](https://img.shields.io/crates/l/dotm)
 
-### TODO
 
-- [ ] Learn Rust
+## Installation
+
+Install via Cargo:
+```bash
+cargo install dotm
+```
+
+Install via Homebrew:
+```bash
+brew install ysdexlic/formulae/dot
+```
+
+## TODO
+
 - [ ] **Write tests**
 - [ ] Error handling
   - [x] Add error when config file isn't set
   - [ ] Fix repeated use of printing the "No .dotrc found" error
   - [ ] Find out best error handling practices
   - [ ] Return pretty errors
-- [ ] Add github actions to build binary
-  - [ ] Add binary to releases
-- [ ] Release on homebrew
-  - [ ] Automate homebrew update PRs (`mislav/bump-homebrew-formula-action`)
+- [x] Add github actions to build binary
+  - [x] Add binary to releases
+- [x] Release on homebrew
+  - [x] Automate homebrew update PRs (`mislav/bump-homebrew-formula-action`)
 
 
 - [x] Don't copy pesky system files like `.DS_Store` (done by only symlinking

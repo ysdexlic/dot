@@ -6,6 +6,10 @@ Subheadings to categorize changes are `added, changed, deprecated, removed, fixe
 
 ## Unreleased
 
+## 0.1.2
+### fixed
+- Fixed release action not running as brew step couldn't access brew tap.
+
 ## 0.1.1
 ### fixed
 - Fixed release action not running as v0.1.0 was already on crates.io.

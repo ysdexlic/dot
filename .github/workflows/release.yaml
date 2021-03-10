@@ -79,7 +79,7 @@ jobs:
       - name: Build | Publish Pre-Release
         uses: softprops/action-gh-release@v1
         with:
-          files: dot.tar.gz
+          files: dot/dot.tar.gz
           body_path: RELEASE_LOG.md
           draft: true
         env:
@@ -94,4 +94,4 @@ jobs:
           formula-name: dot
           homebrew-tap: ysdexlic/homebrew-formulae
         env:
-          COMMITTER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMITTER_TOKEN: ${{ secrets.PAT_TOKEN }}

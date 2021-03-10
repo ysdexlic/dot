@@ -6,6 +6,10 @@ Subheadings to categorize changes are `added, changed, deprecated, removed, fixe
 
 ## Unreleased
 
+## 0.1.5
+### fixed
+- Fixed bootstrap running order, now runs after linking dotfiles.
+
 ## 0.1.4
 ### fixed
 - Fixed release action not uploading artifacts.

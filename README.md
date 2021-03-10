@@ -41,6 +41,8 @@ brew install ysdexlic/formulae/dot
 
 
 - [x] Add bootstrapping feature (run bootstrap executables)
+  - [ ] Fix bootstrapping complaining when multiple dotfile dirs and one doesn't
+        have the bootstrap repo
 - [ ] Add ability to have pre/post hooks
 - [ ] Add ability to have host or tag specific files
 

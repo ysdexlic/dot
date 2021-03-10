@@ -6,10 +6,6 @@ use std::path::Path;
 use crate::utils;
 
 pub fn link_dotfiles(should_bootstrap: bool) -> std::io::Result<()> {
-    if should_bootstrap {
-        utils::bootstrap()?;
-    }
-
     let links = utils::get_links();
 
     if links.is_err() {
@@ -41,6 +37,10 @@ pub fn link_dotfiles(should_bootstrap: bool) -> std::io::Result<()> {
             mkdirs(&link_out)?;
         }
         symlink(&link_in, &link_out)?;
+    }
+
+    if should_bootstrap {
+        utils::bootstrap()?;
     }
 
     Ok(())

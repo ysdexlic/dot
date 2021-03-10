@@ -72,8 +72,6 @@ jobs:
 
       - name: Setup | Artifacts
         uses: actions/download-artifact@v2
-        with:
-          path: artifacts
 
       - name: Setup | Create Release Log
         run: cat CHANGELOG.md | tail -n +7 | head -n 25 > RELEASE_LOG.md
@@ -81,7 +79,7 @@ jobs:
       - name: Build | Publish Pre-Release
         uses: softprops/action-gh-release@v1
         with:
-          files: artifacts/*
+          files: dot*/dot*
           body_path: RELEASE_LOG.md
           draft: true
         env:

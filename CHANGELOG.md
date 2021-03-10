@@ -6,6 +6,10 @@ Subheadings to categorize changes are `added, changed, deprecated, removed, fixe
 
 ## Unreleased
 
+## 0.1.3
+### fixed
+- Fixed release action not uploading artifacts.
+
 ## 0.1.2
 ### fixed
 - Fixed release action not running as brew step couldn't access brew tap.

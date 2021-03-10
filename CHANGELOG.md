@@ -6,5 +6,9 @@ Subheadings to categorize changes are `added, changed, deprecated, removed, fixe
 
 ## Unreleased
 
+## 0.1.1
+### fixed
+- Fixed release action not running as v0.1.0 was already on crates.io.
+
 ## 0.1.0
 - Initialize release.

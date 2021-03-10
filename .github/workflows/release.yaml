@@ -85,13 +85,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  # brew:
-  #   needs: release
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: mislav/bump-homebrew-formula-action@v1.6
-  #       with:
-  #         formula-name: dot
-  #         homebrew-tap: ysdexlic/homebrew-formulae
-  #       env:
-  #         COMMITTER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  brew:
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mislav/bump-homebrew-formula-action@v1.6
+        with:
+          formula-name: dot
+          homebrew-tap: ysdexlic/homebrew-formulae
+        env:
+          COMMITTER_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -74,6 +74,7 @@ pub fn get_links() -> std::io::Result<Vec<(String, String)>> {
                 let p = format!("{}", sub_dirs[i]);
                 if p.chars().nth(0).unwrap() == '.' {
                     has_dot = true;
+                    break;
                 }
             }
 

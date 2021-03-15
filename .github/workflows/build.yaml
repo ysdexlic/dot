@@ -33,7 +33,6 @@ jobs:
       - name: Build | Rustfmt
         run: cargo fmt -- --check
 
-
       - name: Build | Check
         run: cargo check --all
 

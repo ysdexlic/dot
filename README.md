@@ -1,6 +1,6 @@
 # Dot
 
-[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/ysdexlic/dot/build/main)](https://github.com/ysdexlic/dot/actions)
+[![GitHub Workflow Status (branch)](https://img.shields.io/github/actions/workflow/status/ysdexlic/dot/build.yaml?branch=main)](https://github.com/ysdexlic/dot/actions)
 [![crate](https://img.shields.io/crates/v/dotm.svg?color=brightgreen)](https://crates.io/crates/dotm)
 ![license](https://img.shields.io/crates/l/dotm)
 
